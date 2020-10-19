@@ -35,14 +35,21 @@ stages:
         command: 'buildAndPush'
         Dockerfile: '**/Dockerfile'
 
-- stage: Pull_Vps
-  displayName: Pull Image From Vps
+- stage: Server
+  displayName: Pull & Run Container
   jobs:
-  - job: Print_Hello
+  - job: Pull_Image
     steps:
     - task: CmdLine@2
       inputs:
         script: |
           echo Write your commands here
           echo $(Build.BuildId)
-          echo Hello world
+  - job: Deploy_Container
+    steps:
+      - task: ContainerBuild@0
+        inputs:
+          dockerRegistryServiceConnection: 'botnotad'
+          repository: 'botnotad.azurecr.io/botnotad:$(Build.BuildId)'
+          Dockerfile: 'Dockerfile'
+          
