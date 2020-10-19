@@ -44,5 +44,5 @@ stages:
       inputs:
         script: |
           echo Write your commands here
-         
+          echo $(Build.BuildId)
           echo Hello world
