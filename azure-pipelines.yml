@@ -50,6 +50,6 @@ stages:
       - task: ContainerBuild@0
         inputs:
           dockerRegistryServiceConnection: 'botnotad'
-          repository: 'botnotad.azurecr.io/botnotad:$(Build.BuildId)'
+          repository: 'botnotad.azurecr.io/botnotad'
           Dockerfile: 'Dockerfile'
           
