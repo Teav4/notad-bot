@@ -1,3 +1,4 @@
-node_modules/
+src/test/
+build
 package-lock.json
-build/
+node_modules/
