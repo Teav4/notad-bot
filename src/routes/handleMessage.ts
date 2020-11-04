@@ -1,4 +1,4 @@
-import { IsenderPSID, IWebhookMessage, IResponseMessage } from '../@types'
+// import { IsenderPSID, IWebhookMessage, IResponseMessage } from '../types'
 import sendAPI from '../api/sendAPI'
 
 export default function(senderPSID: IsenderPSID, receivedMessage: IWebhookMessage){

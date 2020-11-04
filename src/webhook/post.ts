@@ -1,5 +1,4 @@
 import { Request, Response } from 'express'
-import { IWebhookMessageEvent } from '../@types'
 
 import handleMessage from '../routes/handleMessage'
 import handlePostback from '../routes/handlePostback'

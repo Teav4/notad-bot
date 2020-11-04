@@ -1,4 +1,3 @@
-import { IsenderPSID, IResponseMessage } from '../@types'
 import request, { Response as IResponse } from 'request'
 
 // import runtime env
@@ -8,6 +7,7 @@ dotenv.config()
 const { PAGE_ACCESS_TOKEN } = process.env
 
 export default function callSendAPI(senderPSID: IsenderPSID, response: IResponseMessage): void {
+  console.log('call send API.')
   // Contruct the message body
   const requestBody = {
     recipient: {
