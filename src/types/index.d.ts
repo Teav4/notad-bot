@@ -100,3 +100,20 @@ declare interface ITichhop247 {
    */
   CheckStatus: (transactionID: string) => Promise<ICardCheckStatus>
 }
+
+// MoMo API
+
+interface IMomoTransaction {
+  transactionID: number,
+  phone: number,
+  name: string,
+  amount: number,
+  comment: string,
+  time: number,
+}
+
+declare interface IMomoAPI {
+  transfer(phoneNumber: number, value: number): Promise<boolean>
+  listAll(): void
+  checkTransaction(transactionID: number): Promise<IMomoTransaction | null>
+}
