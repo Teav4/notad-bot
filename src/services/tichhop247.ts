@@ -6,7 +6,7 @@ export default class Tichhop247 implements ITichhop247 {
 
   private _SEND_ENDPOINT = 'http://tichhop247.com/API/NapThe'
   private _CHECK_ENDPOINT = 'http://tichhop247.com/API/TrangThai'
-  private _CALLBACK_URL = 'https://google.com'
+  private _CALLBACK_URL = 'https://whfb.luadao.pro/tichhop247'
 
   constructor(apikey: string) {
     
@@ -45,7 +45,8 @@ export default class Tichhop247 implements ITichhop247 {
 
   public async Add(network: ICardNetWorkType, privateCode: string, series: string, value: number, transactionID: string): Promise<boolean> {
     interface _IResponse { 
-      Code: '1. Là hệ thống đã nhận thẻ' | '0. Lỗi, hệ thống từ chối thẻ này ' 
+      Code: 1 | 0
+      Message: 'Đã nhận thẻ' | 'TrxID đã tồn tại'
     }
 
     const resp: _IResponse = await this.sendGET('SEND',{
@@ -57,7 +58,12 @@ export default class Tichhop247 implements ITichhop247 {
       TrxID: transactionID,
     })
 
-    return resp.Code === '1. Là hệ thống đã nhận thẻ'
+    if (resp.Code === 0) {
+      console.error(new Error(resp.Message))
+      return false
+    }
+    
+    return true
   }
 
   public async CheckStatus(transactionID: string): Promise<ICardCheckStatus> {
