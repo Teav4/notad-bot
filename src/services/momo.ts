@@ -21,7 +21,7 @@ export default class MomoAPI implements IMomoAPI {
       apikey: this._TRANSFER_MOMO_KEY,
       sdtrut: phone,
       tienrut: value,
-      tinnhatrut: desc,
+      tinnhanrut: desc,
       tenrut: name,
     }
 
