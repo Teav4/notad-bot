@@ -112,8 +112,92 @@ interface IMomoTransaction {
   time: number,
 }
 
+declare interface IMomoTransferResponse {
+  momoMsg: {
+    bankInReply: {
+      tranHisMsg: {
+        otpType: string,
+        ipAddress: string,
+        _class: string
+      },
+      _class: string
+    },
+    replyMsgs: [
+      {
+        ID: string,
+        transId: number,
+        tranHisMsg: {
+          ID: string,
+          user: string,
+          commandInd: string,
+          tranId: number,
+          clientTime: number,
+          ackTime: number,
+          finishTime: number,
+          tranType: number,
+          io: number,
+          partnerId: string,
+          partnerCode: string,
+          partnerName: string,
+          amount: number,
+          status: number,
+          ownerNumber: string,
+          ownerName: string,
+          moneySource: number,
+          desc: string,
+          serviceMode: string,
+          originalAmount: number,
+          serviceId: string,
+          quantity: number,
+          lastUpdate: number,
+          share: string,
+          receiverType: number,
+          extras: string,
+          channel: string,
+          otpType: string,
+          ipAddress: string,
+          _class: string
+        },
+        id: string,
+        _class: string
+      }
+    ],
+    _class: string
+  },
+  time: number,
+  user: string,
+  pass: string,
+  cmdId: string,
+  lang: string,
+  msgType: string,
+  result: boolean,
+  errorDesc: string,
+  appCode: string,
+  appVer: number,
+  channel: string,
+  deviceOS: string,
+  ip: string,
+  localAddress: string,
+  session: string,
+  extra: {
+    CASHBACK: string,
+    originalClass: string,
+    originalPhone: string,
+    validateOtpSuccess: string,
+    FIELD_REMOVE: string,
+    GOLDENPIG: string,
+    BALANCE: string,
+    otpVal: string,
+    checkSum: string,
+    details: string,
+    POINT: string,
+    otpCmdId: string
+  }
+}
+
 declare interface IMomoAPI {
-  transfer(phoneNumber: number, value: number): Promise<boolean>
+  transferToMomo(phone: string, value: number, name: string, desc: string): Promise<boolean>
+  withdrawal(value: number, desc: string, phone: number, name?: string): Promise<boolean>
   listAll(): void
   checkTransaction(transactionID: number): Promise<IMomoTransaction | null>
 }

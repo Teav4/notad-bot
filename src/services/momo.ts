@@ -1,13 +1,52 @@
 import request from 'request-promise'
+import { isNumberic } from '../helper/number'
 
 export default class MomoAPI implements IMomoAPI {
   constructor() {
 
   }
 
-  private _ENDPOINT: string = 'https://api.luadao.pro/momo/findid.php'
+  private _CHECK_TRANS_ENDPOINT: string = 'https://api.luadao.pro/momo/findid.php'
+  private _TRANSFER_MOMO_ENDPOINT: string = 'https://api.luadao.pro/momo/sendmoney.php'
+  private _TRANSFER_MOMO_KEY: string = 'notad'
 
-  public transfer(phoneNumber: number, value: number): Promise<boolean> {
+  public async transferToMomo(phone: string, value: number, name: string, desc: string): Promise<boolean> {
+    
+    if (!isNumberic(phone)) {
+      console.error('phone is not a number' + phone)
+      return false
+    }
+    
+    const querystring: object = {
+      apikey: this._TRANSFER_MOMO_KEY,
+      sdtrut: phone,
+      tienrut: value,
+      tinnhatrut: desc,
+      tenrut: name,
+    }
+
+    const resp = await request({
+      method: 'GET',
+      uri: this._TRANSFER_MOMO_ENDPOINT,
+      qs: querystring,
+    })
+    .catch((err) => {
+      console.error(new Error(err))
+    })
+
+    if (resp === 'Api Key Sai') {
+      return false
+    }
+    
+    const transferRes: IMomoTransferResponse = JSON.parse(resp)
+    if (transferRes.result === true) {
+      return true
+    }
+
+    return false
+  }
+
+  public async withdrawal(value: number, desc: string, phone: number, name?: string): Promise<boolean> {
     throw new Error('Method not implemented.');
   }
   
@@ -22,12 +61,13 @@ export default class MomoAPI implements IMomoAPI {
     }
 
     const resp: any = await request ({
-      uri: this._ENDPOINT,
+      method: 'GET',
+      uri: this._CHECK_TRANS_ENDPOINT,
       qs: querystring,
       json: true
     })
-    .catch((error) => {
-      console.error(error)
+    .catch((err) => {
+      console.error(new Error(err))
     })
 
     if (resp.name === undefined || resp.sdt === undefined) {
