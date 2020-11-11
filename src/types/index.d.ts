@@ -56,25 +56,42 @@ declare interface IResponseMessage {
   }
 }
 
+declare type IRole = 'admin' | 'user'
 // MODELS
 declare interface IUser {
   id: number,
   name: string,
   avatar: string,
-  role: string,
+  role: IRole,
 }
-declare interface IWallet {
-  user_id: number,
-  balance: number,
-  currency: number,
-}
-declare interface ITransaction {
-  id: number,
+interface ITransaction {
+  id?: number,
   user_id: number,
   amount: number,
   fee: number,
   time: Date,
-  description: number,
+  description: string,
+}
+interface IWallet {
+  user_id: number,
+  balance: number,
+  currency: string,
+}
+
+declare namespace Models {
+  interface Transaction {
+    addNew(transaction: ITransaction): Promise<any>
+    findByID(transactionID: number): Promise<ITransaction>
+  }
+  interface User {
+    addUser(user: IUser): Promise<any>
+    removeUser(): void
+  }
+  interface Wallet {
+    create(userID: number): Promise<any>
+    update(wallet: IWallet): Promise<any>
+    delete(userID: number): Promise<any>
+  }
 }
 
 // TICH HOP 247

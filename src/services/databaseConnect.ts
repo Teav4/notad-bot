@@ -1,11 +1,14 @@
-import { Client } from 'pg'
-import config from '../config'
+import mysql from 'mysql'
 
-const postgresServer: string = config.database.postgres.server || ''
+const connection = mysql.createConnection({
+    host: '45.76.163.134',
+    user: 'root',
+    password: 'new_password',
+    database: 'gachthe',
+})
 
-export default function (callback: (client: Client) => void): void{
-    const client = new Client({ host: postgresServer, password: 'notad123', user: 'postgres', database: 'postgres' })
+connection.connect()
 
-    client.connect()
-    callback(client)
+export default function databaseConnect(callback: (connection: mysql.Connection) => void) {
+    callback(connection)
 }
