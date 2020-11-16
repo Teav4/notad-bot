@@ -27,13 +27,13 @@ stages:
     displayName: Build
     pool:
       vmImage: $(vmImageName)
-    steps:
-    - task: Docker@2
-      inputs:
-        containerRegistry: 'botnotad'
-        repository: 'botnotad'
-        command: 'buildAndPush'
-        Dockerfile: '**/Dockerfile'
+    # steps:
+    # - task: Docker@2
+    #   inputs:
+    #     containerRegistry: 'botnotad'
+    #     repository: 'botnotad'
+    #     command: 'buildAndPush'
+    #     Dockerfile: '**/Dockerfile'
 
 # - stage: Server
 #   displayName: Pull & Run Container
