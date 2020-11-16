@@ -78,6 +78,13 @@ interface IWallet {
   currency: string,
 }
 
+interface IUserAction {
+  ID?: number,
+  user_id: number,
+  action_name: string,
+  data: any,
+}
+
 declare namespace Models {
   interface Transaction {
     addNew(transaction: ITransaction): Promise<any>
@@ -91,6 +98,13 @@ declare namespace Models {
     create(userID: number): Promise<any>
     update(wallet: IWallet): Promise<any>
     delete(userID: number): Promise<any>
+  }
+
+  interface UserAction {
+    addNew(action: IUserAction): Promise<any>
+    findByID(actionID: number): Promise<IUserAction[]|undefined>
+    findByUserID(userID: number): Promise<IUserAction[]|undefined>
+    deleteByID(actionID: number): Promise<any>
   }
 }
 
