@@ -5,7 +5,7 @@ export default class TransactionModel implements Models.Transaction {
   findByID(transactionID: number): Promise<ITransaction> {
     return new Promise((resolve, reject) => {
       databaseConnect(connection => {
-        connection.query("DELETE FROM `TRANSACTION` WHERE `TRANSACTION`.`id` = ?", [transactionID], 
+        connection.query("SELECT * FROM `TRANSACTION` WHERE `TRANSACTION`.`id` = ?", [transactionID], 
           (err, results, fields) => {
             if (err) throw err
 
