@@ -6,8 +6,8 @@ dotenv.config()
 
 const { PAGE_ACCESS_TOKEN } = process.env
 
-export default function callSendAPI(senderPSID: IsenderPSID, response: IResponseMessage): void {
-  console.log('call send API.')
+export default function callSendAPI(senderPSID: ISenderPSID, response: IResponseMessage): void {
+
   // Contruct the message body
   const requestBody = {
     recipient: {
