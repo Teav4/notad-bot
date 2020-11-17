@@ -1,6 +1,6 @@
 import sendAPI from '../api/sendAPI'
 
-export default function handlePostback (senderPSID: IsenderPSID, receivedPostback: any){
+export default function handlePostback (senderPSID: ISenderPSID, receivedPostback: any){
   let response: IResponseMessage
   
   // Get the payload for the postback

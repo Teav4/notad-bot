@@ -1,4 +1,4 @@
-declare type IsenderPSID = string 
+declare type ISenderPSID = string 
 
 declare interface IWebhookMessage {
   mid: string,

@@ -1,7 +1,7 @@
 // import { IsenderPSID, IWebhookMessage, IResponseMessage } from '../types'
 import sendAPI from '../api/sendAPI'
 
-export default function(senderPSID: IsenderPSID, receivedMessage: IWebhookMessage){
+export default function(senderPSID: ISenderPSID, receivedMessage: IWebhookMessage){
   let response: IResponseMessage
 
   if (receivedMessage.text) {
