@@ -59,7 +59,8 @@ declare interface IResponseMessage {
 declare type IRole = 'admin' | 'user'
 // MODELS
 declare interface IUser {
-  id: number,
+  id?: number,
+  user_id: number,
   name: string,
   avatar: string,
   role: IRole,
@@ -92,6 +93,7 @@ declare namespace Models {
   }
   interface User {
     addUser(user: IUser): Promise<any>
+    findByID(userID: number): Promise<IUser>
     removeUser(): void
   }
   interface Wallet {
