@@ -27,29 +27,29 @@ stages:
     displayName: Build
     pool:
       vmImage: $(vmImageName)
-    steps:
-    - task: Docker@2
-      inputs:
-        containerRegistry: 'botnotad'
-        repository: 'botnotad'
-        command: 'buildAndPush'
-        Dockerfile: '**/Dockerfile'
+    # steps:
+    # - task: Docker@2
+    #   inputs:
+    #     containerRegistry: 'botnotad'
+    #     repository: 'botnotad'
+    #     command: 'buildAndPush'
+    #     Dockerfile: '**/Dockerfile'
 
-- stage: Server
-  displayName: Pull & Run Container
-  jobs:
-  - job: Pull_Image
-    steps:
-    - task: CmdLine@2
-      inputs:
-        script: |
-          echo Write your commands here
-          echo $(Build.BuildId)
-  - job: Deploy_Container
-    steps:
-      - task: ContainerBuild@0
-        inputs:
-          dockerRegistryServiceConnection: 'botnotad'
-          repository: 'botnotad.azurecr.io/botnotad'
-          Dockerfile: 'Dockerfile'
+# - stage: Server
+#   displayName: Pull & Run Container
+#   jobs:
+#   - job: Pull_Image
+#     steps:
+#     - task: CmdLine@2
+#       inputs:
+#         script: |
+#           echo Write your commands here
+#           echo $(Build.BuildId)
+#   - job: Deploy_Container
+#     steps:
+#       - task: ContainerBuild@0
+#         inputs:
+#           dockerRegistryServiceConnection: 'botnotad'
+#           repository: 'botnotad.azurecr.io/botnotad'
+#           Dockerfile: 'Dockerfile'
           
