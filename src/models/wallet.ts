@@ -1,16 +1,29 @@
 import databaseConnect from '../services/databaseConnect'
 
 export default class WalletModel implements Models.Wallet {
-  create(userID: number): Promise<any> {
+  create(wallet: IWallet): Promise<any> {
     return new Promise((resolve, reject) => {
       databaseConnect(connection => {
         connection.query("INSERT INTO `WALLET` (`user_id`, `balance`, `currency`) VALUES (?, ?, ?);", 
-          [ userID, 0, 0], 
+          [ wallet.user_id, wallet.balance, wallet.currency], 
           (err, results, fields) => {
             if (err) throw err
 
             resolve(results)
             connection.end()
+          })
+      })
+    })
+  }
+  getWallet(userID: number): Promise<IWallet|null> {
+    return new Promise((resolve, reject) => {
+      databaseConnect(connection => {
+        connection.query("SELECT * FROM `WALLET` WHERE `WALLET`.`user_id` = ?", [userID], 
+          (err, results, fields) => {
+            if (err) throw err
+
+            connection.end()
+            resolve(results[0] ? results[0] : null)
           })
       })
     })
@@ -23,12 +36,30 @@ export default class WalletModel implements Models.Wallet {
           (err, results, fields) => {
             if (err) throw err
 
-            resolve(results)
             connection.end()
+            resolve(results)
           })
       })
     })
   }
+  
+  async addMoney(userID: number, value: number): Promise<boolean> {
+    let uWallet = await this.getWallet(userID)
+    if (uWallet === null) {
+      uWallet = {
+        user_id: userID,
+        balance: 0,
+        currency: 'VND'
+      }
+      await this.create(uWallet)
+    }
+
+    uWallet.balance += value
+    this.update(uWallet)
+    
+    return true
+  }
+
   delete(userID: number): Promise<any> {
     return new Promise((resolve, reject) => {
       databaseConnect(connection => {
@@ -37,8 +68,8 @@ export default class WalletModel implements Models.Wallet {
           (err, results, fields) => {
             if (err) throw err
 
-            resolve(results)
             connection.end()
+            resolve(results)
           })
       })
     })

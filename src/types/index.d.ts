@@ -61,6 +61,7 @@ declare type IRole = 'admin' | 'user'
 declare interface IUser {
   id?: number,
   user_id: number,
+  facebook_psid: string,
   name: string,
   avatar: string,
   role: IRole,
@@ -72,6 +73,8 @@ interface ITransaction {
   fee: number,
   time: Date,
   description: string,
+  method: 'momo' | 'thecao247',
+  trans_id: string,
 }
 interface IWallet {
   user_id: number,
@@ -89,17 +92,20 @@ interface IUserAction {
 declare namespace Models {
   interface Transaction {
     addNew(transaction: ITransaction): Promise<any>
-    findByID(transactionID: number): Promise<ITransaction>
+    findByID(method: string, transactionID: string): Promise<ITransaction|null>
   }
   interface User {
     addUser(user: IUser): Promise<any>
-    findByID(userID: number): Promise<IUser>
+    findByID(userID: number): Promise<IUser|null>
+    findByFacebookPSID(facebookPSID: string): Promise<IUser|null>
     removeUser(): void
   }
   interface Wallet {
-    create(userID: number): Promise<any>
+    create(wallet: IWallet): Promise<any>
     update(wallet: IWallet): Promise<any>
     delete(userID: number): Promise<any>
+    getWallet(userID: number): Promise<IWallet|null>
+    addMoney(userID: number, value: number): promise<boolean>
   }
 
   interface UserAction {
@@ -233,4 +239,17 @@ declare interface IMomoAPI {
   withdrawal(value: number, desc: string, phone: number, name?: string): Promise<boolean>
   listAll(): void
   checkTransaction(transactionID: number): Promise<IMomoTransaction | null>
+}
+
+interface IPersonProfile {
+  firstName: string,
+  lastName: string,
+  avatarUrl: string
+  locale: string,
+  timezone: number,
+  gender: "male"|"female",
+}
+
+declare interface IMessengerAPI {
+  getPersonProfile(userPSID: string): Promise<IPersonProfile|null>
 }

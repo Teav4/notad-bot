@@ -10,8 +10,8 @@ export default class UserModel implements Models.User {
         ,(err, results, fields) => {
           if (err) throw err
           
+          // connection.end()
           resolve(results)
-          connection.end()
         })
       })
     })
@@ -24,8 +24,8 @@ export default class UserModel implements Models.User {
           (err, results, fields) => {
             if (err) throw err
 
+            // connection.end()
             resolve(results[0] ? results[0] : null)
-            connection.end()
           })
       })
     })
@@ -38,8 +38,8 @@ export default class UserModel implements Models.User {
           (err, results, fields) => {
             if (err) throw err
 
+            // connection.end()
             resolve(results[0] ? results[0] : null)
-            connection.end()
           })
       })
     })
