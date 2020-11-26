@@ -87,6 +87,7 @@ interface IUserAction {
   user_id: number,
   action_name: string,
   data: any,
+  last_update?: number
 }
 
 declare namespace Models {
@@ -96,6 +97,7 @@ declare namespace Models {
   }
   interface User {
     addUser(user: IUser): Promise<any>
+    createNew(facebookPSID): Promise<IUser|null>
     findByID(userID: number): Promise<IUser|null>
     findByFacebookPSID(facebookPSID: string): Promise<IUser|null>
     removeUser(): void
@@ -110,9 +112,12 @@ declare namespace Models {
 
   interface UserAction {
     addNew(action: IUserAction): Promise<any>
-    findByID(actionID: number): Promise<IUserAction[]|undefined>
-    findByUserID(userID: number): Promise<IUserAction[]|undefined>
+    findByID(actionID: number): Promise<IUserAction[]|null>
+    findByUserID(userID: number): Promise<IUserAction[]|null>
+    findByDataString(data: string): Promise<IUserAction[]|null>
+    updateDataByUserID(userID: number, data: any): Promise<any>
     deleteByID(actionID: number): Promise<any>
+    deleteByUserID(userID: number): Promise<any>
   }
 }
 

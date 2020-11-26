@@ -9,7 +9,6 @@ export default class TransactionModel implements Models.Transaction {
           (err, results, fields) => {
             if (err) throw err
 
-            connection.end()
             resolve(results[0] ? results[0] : null)
           })
       })
@@ -24,7 +23,6 @@ export default class TransactionModel implements Models.Transaction {
         , (err, results, fields) => {
           if (err) throw err
           
-          connection.end()
           resolve(results)
         })
       })

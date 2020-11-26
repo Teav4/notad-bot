@@ -10,7 +10,6 @@ export default class WalletModel implements Models.Wallet {
             if (err) throw err
 
             resolve(results)
-            connection.end()
           })
       })
     })
@@ -22,7 +21,6 @@ export default class WalletModel implements Models.Wallet {
           (err, results, fields) => {
             if (err) throw err
 
-            connection.end()
             resolve(results[0] ? results[0] : null)
           })
       })
@@ -36,7 +34,6 @@ export default class WalletModel implements Models.Wallet {
           (err, results, fields) => {
             if (err) throw err
 
-            connection.end()
             resolve(results)
           })
       })
@@ -68,7 +65,6 @@ export default class WalletModel implements Models.Wallet {
           (err, results, fields) => {
             if (err) throw err
 
-            connection.end()
             resolve(results)
           })
       })

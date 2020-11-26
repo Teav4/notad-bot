@@ -48,7 +48,14 @@ export default class Tichhop247 implements ITichhop247 {
       Code: 1 | 0
       Message: 'Đã nhận thẻ' | 'TrxID đã tồn tại'
     }
-
+    console.log({
+      Network: network,
+      CardCode: privateCode,
+      CardSeri: series,
+      CardValue: value,
+      URLCallback: this._CALLBACK_URL,
+      TrxID: transactionID,
+    })
     const resp: _IResponse = await this.sendGET('SEND',{
       Network: network,
       CardCode: privateCode,

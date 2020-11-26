@@ -4,9 +4,10 @@ import config from '../config'
 export default class MessengerAPI implements IMessengerAPI {
 
   private API_ENDPOINT: string = "https://graph.facebook.com/"
-
+  
   async getPersonProfile(userPSID: string): Promise<IPersonProfile|null> {
     const requestUrl: string = this.API_ENDPOINT + userPSID
+    console.log(this.API_ENDPOINT+userPSID+"?fields=first_name,last_name,profile_pic"+"&access_token="+config.page.access_token)
     const resp = await request.get({
       uri: requestUrl,
       qs: {
@@ -15,11 +16,10 @@ export default class MessengerAPI implements IMessengerAPI {
       },
       json: true
     })
-    
     if (resp === {}) {
       return null
     }
-    
+    console.log(resp)
     return {
       firstName: resp.first_name,
       lastName: resp.last_name,

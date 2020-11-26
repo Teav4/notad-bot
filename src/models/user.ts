@@ -1,4 +1,8 @@
 import databaseConnect from "../services/databaseConnect";
+import MessengerAPIService from '../services/messengerAPI'
+import { randomBetween } from '../helper/number'
+
+const MessengerAPI = new MessengerAPIService()
 
 export default class UserModel implements Models.User {
 
@@ -15,6 +19,25 @@ export default class UserModel implements Models.User {
         })
       })
     })
+  }
+
+  async createNew(facebookPSID: string): Promise<IUser|null> {
+    const userProfileResponse = await MessengerAPI.getPersonProfile(facebookPSID)
+
+    if (userProfileResponse === null) {
+      return null
+    }
+
+    const user: IUser = {
+      facebook_psid: facebookPSID,
+      name: `${userProfileResponse.firstName} ${userProfileResponse.lastName}`,
+      avatar: userProfileResponse.avatarUrl,
+      role: 'user',
+      user_id: randomBetween(1, 999999)
+    }
+    this.addUser(user)
+    
+    return user
   }
 
   public findByID(userID: number): Promise<IUser|null> {
