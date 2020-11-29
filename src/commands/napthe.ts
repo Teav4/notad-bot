@@ -5,6 +5,7 @@ import TichHop247 from '../services/tichhop247'
 import { randomBetween } from '../helper/number' 
 import config from '../config'
 import validate from '../validate/tichhop247_napthe'
+import { createQuickReplyText } from '../api/template/quickReply'
 
 const UserAction = new UserActionsModels()
 const User = new UserModels()
@@ -36,8 +37,20 @@ export async function add(senderPSID: ISenderPSID, message: string): Promise<boo
       user_id: userID,
       data: {}
     })
-    sendMessage(senderPSID, { text: 'Chọn nhà mạng (VTT,VMS,VNP, VNM):' })
-    setTimeout(() => sendMessage(senderPSID, { text: 'Gõ X để hủy nhập.' }), 1000)
+
+    setTimeout(() => {
+      sendMessage(senderPSID, {
+        text: 'Chọn nhà mạng (VTT,VMS,VNP, VNM):',
+        quick_replies: [
+          createQuickReplyText('VTT', 'https://media.discordapp.net/attachments/782677973152170015/782678382257242112/viettel-100x100.png'),
+          createQuickReplyText('VMS', 'https://media.discordapp.net/attachments/782677973152170015/782679215283109918/mobifone-100x100.png'),
+          createQuickReplyText('VNP', 'https://media.discordapp.net/attachments/782677973152170015/782678440318599189/vinaphone-xoa-nen.png'),
+          createQuickReplyText('VNM', 'https://media.discordapp.net/attachments/782677973152170015/782678415903293460/vietnammobiphone-100x100.png')
+        ]
+      })
+    })
+    sendMessage(senderPSID, { text: 'Gõ X để hủy nhập.' })
+
     return true
 
   }
