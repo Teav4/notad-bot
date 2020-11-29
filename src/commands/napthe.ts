@@ -82,7 +82,7 @@ export async function check(senderPSID: ISenderPSID, message: string) {
   const actionResponse = await UserAction.findByUserID(userID)
   if (actionResponse !== null) {
 
-    // check timeout (5 minutes)
+    // check timeout (1 minutes)
     if (actionResponse[0].last_update !== undefined && Date.now() - actionResponse[0].last_update > 1*60*1000) {
       console.log('timeout.')
 
