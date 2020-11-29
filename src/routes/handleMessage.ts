@@ -1,5 +1,6 @@
 import config from '../config'
 import ping from '../commands/ping'
+import test from '../commands/test'
 import * as momo from '../commands/momo'
 import * as napthe from '../commands/napthe'
 
@@ -18,6 +19,11 @@ export default function(senderPSID: ISenderPSID, receivedMessage: IWebhookMessag
       if (receivedMessage.text === 'ping') {
         ping(senderPSID)
       }
+
+      if (receivedMessage.text === 'test') {
+        test(senderPSID)
+      }
+
       if (receivedMessage.text.indexOf('napmomo ') === 0) {
         momo.napMoMo(senderPSID, textMessage)
       }

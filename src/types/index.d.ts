@@ -38,22 +38,8 @@ declare interface IWebhookMessageEvent {
 
 declare interface IResponseMessage {
   text?: string,
-  attachment?: {
-    type: 'template',
-    payload: {
-      template_type: 'generic',
-      elements: Array<{
-        title: string,
-        subtitle: string,
-        image_url: string,
-        buttons: Array<{
-          type: 'postback',
-          title: string,
-          payload: 'yes' | 'no',
-        }>
-      }>
-    }
-  }
+  quick_replies?: any,
+  attachment?: any
 }
 
 declare type IRole = 'admin' | 'user'
