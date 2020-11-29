@@ -3,6 +3,7 @@ import ping from '../commands/ping'
 import test from '../commands/test'
 import * as momo from '../commands/momo'
 import * as napthe from '../commands/napthe'
+import * as chuyentien from '../commands/chuyentien'
 
 export default function(senderPSID: ISenderPSID, receivedMessage: IWebhookMessage) {
   const textMessage = receivedMessage.text
@@ -15,6 +16,7 @@ export default function(senderPSID: ISenderPSID, receivedMessage: IWebhookMessag
   if (textMessage) {
 
       napthe.check(senderPSID, textMessage)
+      chuyentien.check(senderPSID, textMessage)
 
       if (receivedMessage.text === 'ping') {
         ping(senderPSID)
@@ -26,6 +28,9 @@ export default function(senderPSID: ISenderPSID, receivedMessage: IWebhookMessag
 
       if (receivedMessage.text.indexOf('napmomo ') === 0) {
         momo.napMoMo(senderPSID, textMessage)
+      }
+      if (receivedMessage.text.indexOf('chuyentien ') === 0) {
+        chuyentien.init(senderPSID, textMessage)
       }
       if (receivedMessage.text === 'napthe') {
         napthe.add(senderPSID, textMessage)
