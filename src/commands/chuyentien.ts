@@ -104,6 +104,11 @@ export async function check(senderPSID: ISenderPSID, message: string) {
 
   const targetUserID = actionData.to
   const transValue = actionData.value
+  const targetUser = await User.findByID(targetUserID)
+  if (targetUser === null) {
+    sendMessage(senderPSID, { text: 'Đã có lỗi xảy ra, hãy thử lại sau. Mã lỗi 305' })
+    return
+  }
 
   if (textMessage === 'yes') {
     const userBalance = await Wallet.getWallet(user.user_id)
@@ -126,7 +131,13 @@ export async function check(senderPSID: ISenderPSID, message: string) {
       quick_replies: [
         createQuickReplyText('OK')
       ]
-    })  
+    })
+    sendMessage(targetUser.facebook_psid, {
+      text: `Đã nhận số tiền ${transValue}VND từ người dùng với ID: ${user.user_id}`,
+      quick_replies: [
+        createQuickReplyText('OK')
+      ]
+    })
   
   } else {
     sendMessage(senderPSID, {
