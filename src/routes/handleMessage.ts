@@ -4,6 +4,7 @@ import test from '../commands/test'
 import * as momo from '../commands/momo'
 import * as napthe from '../commands/napthe'
 import * as chuyentien from '../commands/chuyentien'
+import kiemtra from '../commands/kiemtra'
 
 export default function(senderPSID: ISenderPSID, receivedMessage: IWebhookMessage) {
   const textMessage = receivedMessage.text
@@ -34,6 +35,9 @@ export default function(senderPSID: ISenderPSID, receivedMessage: IWebhookMessag
       }
       if (receivedMessage.text === 'napthe') {
         napthe.add(senderPSID, textMessage)
+      }
+      if (receivedMessage.text === 'kiemtrataikhoan') {
+        kiemtra(senderPSID, textMessage)
       }
       
   }
