@@ -39,15 +39,26 @@ export async function init(senderPSID: ISenderPSID, message: string) {
     return
   }
 
+  
   // get user id
   let user = await User.findByFacebookPSID(senderPSID)
   if (user === null) {
     user = await User.createNew(senderPSID)
-
+    
     if (user === null) {
       sendMessage(senderPSID, { text: 'Đã có lỗi xảy ra, hãy thử lại sau. Mã lỗi 301' })
       return false
     }
+  }
+
+  if (_targetUserID === user.user_id) {
+    sendMessage(senderPSID, {
+      text: 'Không thể chuyển tiền cho chính bản thân.',
+      quick_replies: [
+        createQuickReplyText('Tôi hiểu.')
+      ]
+    })
+    return
   }
 
   let targetUser = await User.findByID(_targetUserID)
@@ -62,6 +73,7 @@ export async function init(senderPSID: ISenderPSID, message: string) {
       user: user.user_id,
       to: _targetUserID,
       value: _transValue,
+      message: null
     },
     user_id: user.user_id,
   })
@@ -70,7 +82,8 @@ export async function init(senderPSID: ISenderPSID, message: string) {
     text: `Bạn xác nhận chuyển số tiền ${_transValue}VND cho người dùng ${targetUser.name} [ID: ${targetUserID}]`,
     quick_replies: [
       createQuickReplyText('Yes', 'https://cdn.discordapp.com/attachments/782703068038824017/782703092021985299/pepeyes.png'),
-      createQuickReplyText('No', 'https://cdn.discordapp.com/attachments/782703068038824017/782703105313341480/pepeno.png')
+      createQuickReplyText('No', 'https://cdn.discordapp.com/attachments/782703068038824017/782703105313341480/pepeno.png'),
+      createQuickReplyText('Thêm lời nhắn')
     ]
   })
 }
@@ -101,7 +114,6 @@ export async function check(senderPSID: ISenderPSID, message: string) {
     UserAction.deleteByUserID(user.user_id)
     return 
   }
-
   const targetUserID = actionData.to
   const transValue = actionData.value
   const targetUser = await User.findByID(targetUserID)
@@ -110,6 +122,24 @@ export async function check(senderPSID: ISenderPSID, message: string) {
     return
   }
 
+  if (actionData.message === '$$$wait_to_add_message$$$') {
+    if (textMessage.length > 200) {
+      sendMessage(senderPSID, { text: 'Lời nhắn nhập không đựoc quá 200 ký tự.' })
+      return
+    }
+    actionData.message = textMessage
+
+    UserAction.updateDataByUserID(user.user_id, actionData)
+    sendMessage(senderPSID, {
+      text: `Bạn xác nhận chuyển số tiền ${transValue}VND cho người dùng ${targetUser.name} [ID: ${targetUserID}]`,
+      quick_replies: [
+        createQuickReplyText('Yes', 'https://cdn.discordapp.com/attachments/782703068038824017/782703092021985299/pepeyes.png'),
+        createQuickReplyText('No', 'https://cdn.discordapp.com/attachments/782703068038824017/782703105313341480/pepeno.png')
+      ]
+    })
+    return
+  }
+  console.log({ textMessage, mess: actionData.message })
   if (textMessage === 'yes') {
     const userBalance = await Wallet.getWallet(user.user_id)
     if (userBalance === null) {
@@ -132,13 +162,21 @@ export async function check(senderPSID: ISenderPSID, message: string) {
         createQuickReplyText('OK')
       ]
     })
+    
+    let text = `Đã nhận số tiền ${transValue}VND từ người dùng ${user.name} [ID: ${user.user_id}]`
+    if (actionData.message !== null) text += `, lời nhắn: ${actionData.message}`
     sendMessage(targetUser.facebook_psid, {
-      text: `Đã nhận số tiền ${transValue}VND từ người dùng với ID: ${user.user_id}`,
+      text,
       quick_replies: [
         createQuickReplyText('OK')
       ]
     })
   
+  } else if (textMessage === 'thêm lời nhắn' && actionData.message === null) {
+    actionData.message = '$$$wait_to_add_message$$$'
+    UserAction.updateDataByUserID(user.user_id, actionData)
+    sendMessage(senderPSID, { text: 'Nhập lời nhắn muốn gửi:' })
+    return
   } else {
     sendMessage(senderPSID, {
       text: 'Đã hủy chuyển tiền.'
