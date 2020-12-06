@@ -32,4 +32,10 @@ declare namespace Messenger {
       payload: string,
     }
   }
+
+  export namespace API {
+    interface uploadMediaResponse {
+      attachment_id: string,
+    }
+  }
 }
