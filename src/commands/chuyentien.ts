@@ -102,8 +102,11 @@ export async function check(senderPSID: ISenderPSID, message: string) {
     }
   }
   const action = await UserAction.findByUserID(user.user_id)
+  console.log('action', action)
   if (action === null) {
     return  
+  } else if (action[0].action_name !== 'user_money_tranfer_confirm') {
+    return
   }
   
   const actionData = JSON.parse(action[0].data)

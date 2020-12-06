@@ -80,7 +80,7 @@ export async function check(senderPSID: ISenderPSID, message: string) {
   const userID = user.user_id
 
   const actionResponse = await UserAction.findByUserID(userID)
-  if (actionResponse !== null) {
+  if (actionResponse !== null && actionResponse[0].action_name === 'napthe247') {
 
     // check timeout (1 minutes)
     if (actionResponse[0].last_update !== undefined && Date.now() - actionResponse[0].last_update > 1*60*1000) {
