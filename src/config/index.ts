@@ -1,4 +1,3 @@
-import tichhop247 from '@/webhook/tichhop247'
 import dotenv from 'dotenv'
 
 dotenv.config()
@@ -9,6 +8,12 @@ export default {
       server: process.env.POSTGRES_SERVER,
       password: process.env.notad123,
       database_name: process.env.POSTGRES_DATABASE_NAME,
+    },
+    mysql: {
+      server: 'localhost',
+      password: 'Notad123',
+      username: 'root',
+      database_name: 'botdata',
     }
   },
   page: {

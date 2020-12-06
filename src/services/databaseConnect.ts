@@ -1,10 +1,11 @@
 import mysql from 'mysql'
+import config from '../config'
 
 const connection = mysql.createConnection({
-    host: '103.82.24.211',
-    user: 'root',
-    password: 'Notad123',
-    database: 'botdata',
+    host: config.database.mysql.server,
+    user: config.database.mysql.username,
+    password: config.database.mysql.password,
+    database: config.database.mysql.database_name,
 })
 
 connection.connect()
