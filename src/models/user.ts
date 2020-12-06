@@ -28,6 +28,12 @@ export default class UserModel implements Models.User {
       return null
     }
 
+    // check exist
+    const _user = await this.findByFacebookPSID(facebookPSID)
+    if (_user !== null) {
+      return _user
+    }
+
     const user: IUser = {
       facebook_psid: facebookPSID,
       name: `${userProfileResponse.firstName} ${userProfileResponse.lastName}`,
