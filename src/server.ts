@@ -10,6 +10,7 @@ import * as _const from './const/server'
 import webhookPostController from './webhook/post'
 import webhookGetController from './webhook/get'
 import tichhop247Webhook from './webhook/tichhop247'
+import cardvipvnWebhook from './webhook/cardvipvn'
 
 // import runtime env
 dotenv.config()
@@ -26,3 +27,6 @@ app.get('/webhook', webhookGetController)
 
 // tichhop247 webhook
 app.get('/tichhop247', tichhop247Webhook)
+
+// cardvip.vn webhook
+app.get('/cardvipvn', cardvipvnWebhook)

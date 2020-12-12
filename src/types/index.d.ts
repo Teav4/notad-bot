@@ -131,6 +131,20 @@ declare interface ITichhop247 {
   CheckStatus: (transactionID: string) => Promise<ICardCheckStatus>
 }
 
+declare interface ICardVipVNAPI {
+  /**
+   * Tao yeu cau nap the
+   * @param network ten nha mang
+   * @param price menh gia the
+   * @param privateCode ma the
+   * @param cardSeries series
+   * @param isFast true
+   * @param requestID requestID
+   */
+  Add(network: string, price: number, privateCode: string, cardSeries: string, isFast: boolean, requestID: string): Promise<any>
+  
+}
+
 // MoMo API
 
 interface IMomoTransaction {
