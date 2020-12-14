@@ -1,5 +1,4 @@
 import request from 'request'
-import qs from 'qs'
 
 export default class CardVipVN implements ICardVipVNAPI {
     private _apikey: string
@@ -14,19 +13,19 @@ export default class CardVipVN implements ICardVipVNAPI {
         'Content-Type': 'application/json' 
     }
     
-    Add(network: string, price: number, privateCode: string, cardSeries: string, isFast: boolean, requestID: string): Promise<any> {
+    Add(cardData: ICardVipVN.CardInfo): Promise<any> {
         
         const requestOptions: request.Options = {
             uri: this._SEND_URL,
             headers: this.headers,
-            body: qs.stringify({
+            body: JSON.stringify({
                 APIKey : this._apikey,
-                NetworkCode: network,
-                PricesExchange: price,
-                NumberCard: privateCode,
-                SeriCard: cardSeries,
-                IsFast: isFast,
-                RequestId: requestID
+                NetworkCode: cardData.network,
+                PricesExchange: cardData.price,
+                NumberCard: cardData.privateCode,
+                SeriCard: cardData.cardSeries,
+                IsFast: cardData.isFast,
+                RequestId: cardData.requestID
             })
         }
         

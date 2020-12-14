@@ -141,7 +141,7 @@ declare interface ICardVipVNAPI {
    * @param isFast true
    * @param requestID requestID
    */
-  Add(network: string, price: number, privateCode: string, cardSeries: string, isFast: boolean, requestID: string): Promise<any>
+  Add(cardData: ICardVipVN.CardInfo): Promise<any>
   
 }
 
