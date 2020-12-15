@@ -24,9 +24,12 @@ export default {
   cardvipvn: {
     apikey: process.env.CARDVIPVN_APIKEY,
   },
+  thesieure: {
+    partner_id: process.env.THESIEURE_PARTNER_ID
+  },
   tichhop247_card_rate: {
     default: 0.25
   },
-  tichhop247_network_list: ['VTT', 'VMS', 'VNP', 'VNM'],
+  tichhop247_network_list: ['VIETTEL', 'MOBIFONE', 'VINAPHONE', 'VIETNAMOBILE', 'GATE', 'ZING', 'GARENA'],
   tichhop247_card_type: [10000, 20000, 30000, 50000, 100000, 200000, 300000, 500000, 1000000]
 }

@@ -59,7 +59,7 @@ interface ITransaction {
   fee: number,
   time: Date,
   description: string,
-  method: 'momo' | 'thecao247',
+  method: 'momo' | 'thecao247' | 'cardvipvn',
   trans_id: string,
 }
 interface IWallet {

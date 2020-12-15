@@ -40,12 +40,12 @@ export async function add(senderPSID: ISenderPSID, message: string): Promise<boo
 
     setTimeout(() => {
       sendMessage(senderPSID, {
-        text: 'Chọn nhà mạng (VTT,VMS,VNP, VNM):',
+        text: 'Chọn nhà mạng (VIETTEL, MOBIFONE, VINAPHONE, VIETNAMOBILE):',
         quick_replies: [
-          createQuickReplyText('VTT', 'https://media.discordapp.net/attachments/782677973152170015/782678382257242112/viettel-100x100.png'),
-          createQuickReplyText('VMS', 'https://media.discordapp.net/attachments/782677973152170015/782679215283109918/mobifone-100x100.png'),
-          createQuickReplyText('VNP', 'https://media.discordapp.net/attachments/782677973152170015/782678440318599189/vinaphone-xoa-nen.png'),
-          createQuickReplyText('VNM', 'https://media.discordapp.net/attachments/782677973152170015/782678415903293460/vietnammobiphone-100x100.png')
+          createQuickReplyText('VIETTEL', 'https://media.discordapp.net/attachments/782677973152170015/782678382257242112/viettel-100x100.png'),
+          createQuickReplyText('MOBIFONE', 'https://media.discordapp.net/attachments/782677973152170015/782679215283109918/mobifone-100x100.png'),
+          createQuickReplyText('VINAPHONE', 'https://media.discordapp.net/attachments/782677973152170015/782678440318599189/vinaphone-xoa-nen.png'),
+          createQuickReplyText('VIETNAMOBILE', 'https://media.discordapp.net/attachments/782677973152170015/782678415903293460/vietnammobiphone-100x100.png')
         ]
       })
     })
