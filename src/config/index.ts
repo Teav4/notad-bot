@@ -21,6 +21,9 @@ export default {
     access_token: process.env.PAGE_ACCESS_TOKEN
   },
   tichhop247_key: process.env.TICHHOP247_APIKEY,
+  cardvipvn: {
+    apikey: process.env.CARDVIPVN_APIKEY,
+  },
   tichhop247_card_rate: {
     default: 0.25
   },

@@ -1,7 +1,7 @@
 import sendMessage from '../api/sendAPI'
 import UserActionsModels from '../models/userAction'
 import UserModels from '../models/user'
-import CardvipVNAPI from '../services/cardvipvnAPI'
+import TichHop247 from '../services/tichhop247'
 import { randomBetween } from '../helper/number' 
 import config from '../config'
 import validate from '../validate/tichhop247_napthe'
@@ -9,7 +9,7 @@ import { createQuickReplyText } from '../api/template/quickReply'
 
 const UserAction = new UserActionsModels()
 const User = new UserModels()
-const cardvipVNAPI = new CardvipVNAPI(config.cardvipvn.apikey || '')
+const Tichhop247 = new TichHop247(config.tichhop247_key || '')
 
 export async function add(senderPSID: ISenderPSID, message: string): Promise<boolean> {
   let textMessage: string = message
@@ -155,18 +155,8 @@ export async function check(senderPSID: ISenderPSID, message: string) {
           UserAction.deleteByUserID(userID)
         
           const transactionID = randomBetween(1, 999999).toString()
-
-          // @ts-ignore
-          const cardData: ICardVipVN.CardInfo = {
-            network: actionData.network,
-            privateCode: actionData.privateCode,
-            cardSeries: actionData.series,
-            price: actionData.value,
-            requestID: transactionID,
-          }
-          console.log(cardData)
-          const isComplete = await cardvipVNAPI.Add(cardData)
-
+          const isComplete = await Tichhop247.Add(actionData.network, actionData.privateCode, actionData.series, actionData.value, transactionID)
+        
           if (!isComplete) {
             sendMessage(senderPSID, { text: 'Thông tin thẻ sai, hoặc đã được sử dụng. Vui lòng liên hệ admin để được hỗ trợ.' })
           } else {
